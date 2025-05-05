@@ -5,7 +5,9 @@ namespace App\Providers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
+use Laravel\Socialite\Facades\Socialite;
+use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\VKontakte\Provider;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        SocialiteWasCalled::class => [
+            'SocialiteProviders\VKontakte\VKontakteExtendSocialite@handle',
+        ],
     ];
 
     /**
@@ -25,8 +31,27 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        parent::boot();
+
+        $this->bootSocialite();
     }
+
+    protected function bootSocialite(): void
+    {
+        Socialite::extend('vkontakte', static function ($app) {
+            $config = $app['config']['services.vkontakte'];
+
+            $provider = new Provider(
+                $app['request'],
+                $config['client_id'],
+                $config['client_secret'],
+                $config['redirect']
+            );
+
+            return $provider->scopes(['email']);
+        });
+    }
+
 
     /**
      * Determine if events and listeners should be automatically discovered.

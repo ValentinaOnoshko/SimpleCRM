@@ -1,85 +1,55 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div class="min-h-screen flex flex-col md:flex-row items-center justify-center gap-10 px-6 py-10 bg-gradient-to-br from-blue-100 via-white to-blue-100">
+    <div class="w-full max-w-md">
+      <div v-if="activeTab === 'register'" class="flex justify-center mb-6 gap-4">
+        <button
+          :class="buttonClass('client')"
+          @click="role = 'client'"
+        >Клиент</button>
+        <button
+          :class="buttonClass('performer')"
+          @click="role = 'performer'"
+        >Исполнитель</button>
+      </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+      <RegisterForm :role="role" v-model:activeTab="activeTab" @clearForm="clearForm" />
     </div>
-  </header>
 
-  <RouterView />
+    <div class="hidden md:block max-w-xl w-full">
+      <img
+        :src="regImage"
+        alt="Auth illustration"
+        class="w-full h-auto object-contain"
+      />
+    </div>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<script>
+import RegisterForm from './components/RegisterForm.vue'
+import regImage from './assets/images/reg.png'
+
+export default {
+  components: {RegisterForm},
+  data() {
+    return {
+      role: 'client',
+      activeTab: 'login',
+      regImage,
+    }
+  },
+  methods: {
+    buttonClass(current) {
+      return [
+        'px-5 py-2 rounded-lg font-semibold transition-all',
+        this.role === current
+          ? 'bg-green-500 text-white'
+          : 'bg-gray-200 text-gray-600 hover:bg-gray-300',
+      ]
+    },
+    clearForm() {
+      this.role = 'client'
+    },
+  },
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+</script>

@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\SocialAuthController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', static function () {
+    return view('app');
+})->where('any', '.*');
+
+Route::get('/auth/vk/redirect', [SocialAuthController::class, 'redirectToVK']);
+Route::get('/auth/vk/callback', [SocialAuthController::class, 'handleVKCallback']);
