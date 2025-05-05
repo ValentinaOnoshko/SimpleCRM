@@ -1,0 +1,26 @@
+# IDE files
+.idea/
+.vscode/
+
+/vendor/
+public/storage
+/storage/*.key
+
+*.log
+*.pid
+docker-compose.override.yml
+
+.env
+.env.*.local
+
+composer.lock
+
+/config/*.php
+
+backend/storage/
+
+frontend/node_modules/
+frontend/.vscode/
+
+nginx/certs/
+nginx/conf.d/
