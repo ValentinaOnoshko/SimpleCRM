@@ -1,20 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+import ProfileClient from '../views/ClientProfile.vue'
+import ProfilePerformer from '../views/PerformerProfile.vue'
+import Deals from '../views/DealsPage.vue'
+import DealView from '../views/DealView.vue'
+import DealEdit from '../views/DealEdit.vue'
+import Settings from '../views/AccountSettings.vue'
+import NotFound from '../views/NotFound.vue'
+
+const routes = [
+  { path: '/', redirect: '/deals' },
+  { path: '/deals', component: Deals },
+  { path: '/deals/:id', component: DealView },
+  { path: '/deals/edit/:id', component: DealEdit },
+  { path: '/client/profile', component: ProfileClient },
+  { path: '/performer/profile', component: ProfilePerformer },
+  { path: '/settings', component: Settings },
+  { path: '/:pathMatch(.*)*', component: NotFound },
+]
 
 const router = createRouter({
-  history: createWebHistory('/'),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue'),
-    },
-  ],
+  history: createWebHistory(),
+  routes,
 })
 
 export default router
