@@ -22,5 +22,4 @@ Route::get('/', static function () {
     return view('app');
 })->where('any', '.*');
 
-Route::get('/auth/vk/redirect', [SocialAuthController::class, 'redirectToVK']);
-Route::get('/auth/vk/callback', [SocialAuthController::class, 'handleVKCallback']);
+

@@ -3,12 +3,14 @@ import vue from '@vitejs/plugin-vue';
 import rollupNodePolyFill from 'rollup-plugin-polyfill-node';
 import path from 'path';
 
+const currentDir = new URL('.', import.meta.url).pathname;
+
 export default defineConfig({
   root: '.',
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': path.resolve(currentDir, './src'),
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
     },
@@ -23,9 +25,21 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
-      input: path.resolve(__dirname, 'index.html'),
+      input: path.resolve(currentDir, 'index.html'),
       plugins: [rollupNodePolyFill()],
     },
   },
   base: '/',
+
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });

@@ -24,7 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::enableImplicitGrant();
-        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
         Passport::tokensExpireIn(now()->addHours(2));
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
     }
 }

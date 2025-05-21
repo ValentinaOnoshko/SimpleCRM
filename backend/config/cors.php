@@ -15,11 +15,14 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'auth/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'auth/*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173', 'https://simple-crm.local', 'http://simple-crm.local'],
+    'allowed_origins' => [
+        'http://simple-crm.test',
+        'https://simple-crm.test',
+    ],
 
     'allowed_origins_patterns' => [],
 
@@ -29,5 +32,5 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 ];
