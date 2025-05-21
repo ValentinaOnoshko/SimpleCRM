@@ -11,12 +11,17 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vkid/sdk": "^2.5.2",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "axios": "^1.9.0",
     "crypto-browserify": "^3.12.1",
+    "nprogress": "^0.2.0",
     "stream-browserify": "^3.0.0",
     "vk-openapi": "^0.1.2",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vuelidate": "^0.7.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

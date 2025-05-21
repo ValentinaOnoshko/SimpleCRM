@@ -40,18 +40,14 @@ class EventServiceProvider extends ServiceProvider
     {
         Socialite::extend('vkontakte', static function ($app) {
             $config = $app['config']['services.vkontakte'];
-
-            $provider = new Provider(
+            return (new Provider(
                 $app['request'],
                 $config['client_id'],
                 $config['client_secret'],
                 $config['redirect']
-            );
-
-            return $provider->scopes(['email']);
+            ))->scopes(['email']);
         });
     }
-
 
     /**
      * Determine if events and listeners should be automatically discovered.
